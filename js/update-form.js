@@ -18,6 +18,7 @@ const updateAddrInput = document.querySelector(".js-updateAddrInput");
 const updateCpInput = document.querySelector(".js-updateCpInput");
 const updateImgInput = document.querySelector(".js-updateImgInput");
 const updateBtn= document.querySelector(".js-updateBtn");
+const responseTextEl = document.querySelector(".js-response");
 
 //Prevent default para evitar auto-enviado de datos
 function submitPrevent(event) {
@@ -64,16 +65,18 @@ function submitPrevent(event) {
         // console.log(updateCpInput.value);
         // console.log(updateImgInput.value);
 
-    return {
-        "nombre": updateNameInput.value,
-        "apellido":updateSurnameInput.value,
-        "dni":updateDniInput.value,
-        "email":updateEmailInput.value,
-        "telefono":updateTelInput.value,
-        "direccion":updateAddrInput.value,
-        "codigoPostal":updateCpInput.value,
-        //"imagen":updateImgInput.value,
-    }
+        const myData = {
+          nombre: updateNameInput.value,
+          apellido: updateSurnameInput.value,
+          dni: updateDniInput.value,
+          email: updateEmailInput.value,
+          telefono: updateTelInput.value,
+          direccion: updateAddrInput.value,
+          codigoPostal: updateCpInput.value,
+          imagen: null,
+        }
+
+      return myData;
   }
 
   
@@ -83,28 +86,103 @@ updateBtn.addEventListener("click", handleUpdatedBtn);
 
 
 //FETCH TIPO POST PARA ACTUALIZAR DATOS DE USUARIOS
-const ENDPOINT = `http://localhost:8080/alumnos/${userId}`;
+//ULTIMO INTENTO POST
+const postDataFetch = async (updatedData) => {
+  const url = `http://localhost:8080/alumnos`;
+  const res = await fetch(url, {
+    method: "POST",
+    contentType: "application.json",
+    headers: {
+      'Content-type': 'application/json',
+    },
+    mode: "no-cors",
+    body: JSON.stringify(updatedData)
+  }).catch((error) => {
+    responseTextEl.innerHTML = `Ha habido un error con el fetch: Error: ${error.message}`;
+  });
 
-function postDataFetch(updatedData) {
+  console.log(res, 'consolelog')
+  //const data = await res.json();
+
+  //console.log(data, 'response2');
+
+};
+
+//DA ERROR 403
+/**function postDataFetch(data) {
+  fetch("http://localhost:8080/alumnos", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+    mode: "no-cors",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch(() => {
+      responseTextEl.innerHTML = `<p class="error">No se ha podido realizar la petición..</p>`;
+    });
+} **/
+
+
+/**const postDataFetch= async (updatedData) => {    
+  //let url = `http://localhost:8080/alumnos/${userId}`;
+  let url = `http://localhost:8080/alumnos`;
+
   console.log(userId);
-  console.log(updatedData);
-  console.log(JSON.stringify(updatedData));
+  console.log(url);
+  const res = await fetch(url,{
+      //method:"PUT",
+      method: "POST",
+      headers:{
+        'Content-Type':'application/json',
+      },
+      mode: "no-cors",
+      body:JSON.stringify(updatedData) 
+    }).catch((error) => {
+    const responseString =
 
-  return fetch(ENDPOINT, {
-    method: "PUT",
+    `Hubo un problema con la petición Fetch: ${error.message}`;
+
+    responseTextEl.innerHTML = responseString;
+
+  });
+
+
+//const data = await res.json();
+
+//console.log(data,'response2');
+
+};**/
+
+
+
+/*const postDataFetch = (updatedData) => {
+  console.log(updatedData);
+  const url = `http://localhost:8080/alumnos/${userId}`;
+  return fetch(url, {
+    method: 'POST',
     body: JSON.stringify(updatedData),
     mode: "no-cors",
     headers: {
       'Content-Type': 'application/json',
     },
   })
-  
     .then((response) => response.json())
     .then((data) => {
       return data;
     });
-}
+};
+*/
 
+
+
+
+/*
 //Función para reiniciar los valores de los inputs
 const resetValues = () => {
     updateNameInput.value = "";
@@ -116,4 +194,5 @@ const resetValues = () => {
     updateCpInput.value = "";
     updateImgInput.value = "";
 
-}
+}*/
+
