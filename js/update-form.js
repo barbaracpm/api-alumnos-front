@@ -1,7 +1,14 @@
 "use strict";
 
-//Constantes con elementos form e inputs del formulario UPDATE
+//Constantes e input del form donde pedimos el id
+const getIdFormEl = document.querySelector(".js-getIdForm");
+const userIdInput = document.querySelector(".js-userId");
+const sendIdBtn = document.querySelector(".js-sendIdBtn");
+
+//Constantes con elementos form e inputs del formulario UPDATE (actualizar datos del usuario)
+
 const updateFormEl = document.querySelector(".js-upDateForm");
+//const updateInputEls= document.querySelector(".js-updateInput");
 const updateNameInput =document.querySelector(".js-updateNameInput");
 const updateSurnameInput = document.querySelector(".js-updateSurnameInput");
 const updateDniInput = document.querySelector(".js-updateDniInput");
@@ -17,27 +24,45 @@ function submitPrevent(event) {
     event.preventDefault();
   }
   
+  getIdFormEl.addEventListener("submit", submitPrevent);
   updateFormEl.addEventListener("submit", submitPrevent);
-  
 
-  //Función handler. Llama a getUserData para recoger valores introducidos por el usuario y llama al fetch pasándole esos valores.
-
-  const sendUpdatedData = () => {
-    const updatedData = getUserData();
-    postDataFetch(updatedData); 
-    resetValues();
+  //Función handler botón de enviado de ID. Llama a getUserId para obtener el id del usuario y nos abre el siguiente formulario
+  let userId="";
+  function handleIdBtn(){
+    userId = getUserId();
+    updateFormEl.classList.remove("hidden");
   }
 
-   //Función para recuperar los values de los inputs insertados por el usuario
+  //Función para obtener el id del user
+
+  function getUserId() {
+    return parseInt(userIdInput.value);
+  
+  }
+
+  //Evento del formulario id
+   sendIdBtn.addEventListener("click", handleIdBtn);
+  
+
+  //Función button handler del formulario update (actualización datos del user). Llama a getUserData para recoger valores introducidos por el usuario y llama al fetch pasándole esos valores.
+
+  function handleUpdatedBtn() {
+    const updatedData = getUserData();
+    postDataFetch(updatedData);
+    //resetValues();
+}
+
+   //Función para obtener los values de los inputs insertados por el usuario
    function getUserData() {
        
-        console.log(updateNameInput.value);
-        console.log(updateSurnameInput.value);
-        console.log(updateDniInput.value);
-        console.log(updateEmailInput.value);
-        console.log(updateTelInput.value);
-        console.log(updateCpInput.value);
-       //console.log(updateImgInput.value);
+        // console.log(updateNameInput.value);
+        // console.log(updateSurnameInput.value);
+        // console.log(updateDniInput.value);
+        // console.log(updateEmailInput.value);
+        // console.log(updateTelInput.value);
+        // console.log(updateCpInput.value);
+        // console.log(updateImgInput.value);
 
     return {
         "nombre": updateNameInput.value,
@@ -47,41 +72,48 @@ function submitPrevent(event) {
         "telefono":updateTelInput.value,
         "direccion":updateAddrInput.value,
         "codigoPostal":updateCpInput.value,
-        "imagen":updateImgInput.value,
+        //"imagen":updateImgInput.value,
     }
   }
 
   
-//Evento botón submit
-updateBtn.addEventListener("click", sendUpdatedData);
+//Evento botón submit enviado datos del form
+updateBtn.addEventListener("click", handleUpdatedBtn);
 
 
-const ENDPOINT = '/card/';
 
 //FETCH TIPO POST PARA ACTUALIZAR DATOS DE USUARIOS
-const postDataFetch = (updatedData) => {
+const ENDPOINT = `http://localhost:8080/alumnos/${userId}`;
+
+function postDataFetch(updatedData) {
+  console.log(userId);
+  console.log(updatedData);
+  console.log(JSON.stringify(updatedData));
+
   return fetch(ENDPOINT, {
-    method: 'POST',
+    method: "PUT",
     body: JSON.stringify(updatedData),
+    mode: "no-cors",
     headers: {
       'Content-Type': 'application/json',
     },
   })
+  
     .then((response) => response.json())
     .then((data) => {
       return data;
     });
-};
+}
 
-//Función para borrar valores
+//Función para reiniciar los valores de los inputs
 const resetValues = () => {
-    updateNameInput.value,
-    updateSurnameInput.value,
-    updateDniInput.value,
-    updateEmailInput.value,
-    updateTelInput.value,
-    updateAddrInput.value,
-    updateCpInput.value,
-   updateImgInput.value,
+    updateNameInput.value = "";
+    updateSurnameInput.value = "";
+    updateDniInput.value = "";
+    updateEmailInput.value = "";
+    updateTelInput.value = "";
+    updateAddrInput.value = "";
+    updateCpInput.value = "";
+    updateImgInput.value = "";
 
 }
