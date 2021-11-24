@@ -86,8 +86,13 @@ updateBtn.addEventListener("click", handleUpdatedBtn);
 
 
 //FETCH TIPO POST PARA ACTUALIZAR DATOS DE USUARIOS
+//let url = `http://localhost:8080/alumnos/${userId}`;
+
 //ULTIMO INTENTO POST
 const postDataFetch = async (updatedData) => {
+  console.log(updatedData);
+  console.log(JSON.stringify(updatedData))
+
   const url = `http://localhost:8080/alumnos`;
   const res = await fetch(url, {
     method: "POST",
@@ -102,9 +107,9 @@ const postDataFetch = async (updatedData) => {
   });
 
   console.log(res, 'consolelog')
-  //const data = await res.json();
+  const data = await res.json();
 
-  //console.log(data, 'response2');
+ console.log(data, 'response2');
 
 };
 
@@ -127,58 +132,6 @@ const postDataFetch = async (updatedData) => {
       responseTextEl.innerHTML = `<p class="error">No se ha podido realizar la petición..</p>`;
     });
 } **/
-
-
-/**const postDataFetch= async (updatedData) => {    
-  //let url = `http://localhost:8080/alumnos/${userId}`;
-  let url = `http://localhost:8080/alumnos`;
-
-  console.log(userId);
-  console.log(url);
-  const res = await fetch(url,{
-      //method:"PUT",
-      method: "POST",
-      headers:{
-        'Content-Type':'application/json',
-      },
-      mode: "no-cors",
-      body:JSON.stringify(updatedData) 
-    }).catch((error) => {
-    const responseString =
-
-    `Hubo un problema con la petición Fetch: ${error.message}`;
-
-    responseTextEl.innerHTML = responseString;
-
-  });
-
-
-//const data = await res.json();
-
-//console.log(data,'response2');
-
-};**/
-
-
-
-/*const postDataFetch = (updatedData) => {
-  console.log(updatedData);
-  const url = `http://localhost:8080/alumnos/${userId}`;
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(updatedData),
-    mode: "no-cors",
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    });
-};
-*/
-
 
 
 
