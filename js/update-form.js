@@ -4,6 +4,7 @@
 const getIdFormEl = document.querySelector(".js-getIdForm");
 const userIdInput = document.querySelector(".js-userId");
 const sendIdBtn = document.querySelector(".js-sendIdBtn");
+const update2btn = document.querySelector(".js-updatebtn2")
 
 //Constantes con elementos form e inputs del formulario UPDATE (actualizar datos del usuario)
 
@@ -44,13 +45,23 @@ function submitPrevent(event) {
 
   //Evento del formulario id
    sendIdBtn.addEventListener("click", handleIdBtn);
+
+   //Evento Actualizar datos
+   update2btn.addEventListener("click", handleUpdate2);
+
+   //FUNCIÓN PARA ACTUALIZAR DATOS DEL USUARIO
+   function handleUpdate2() {
+    const updatedData = getUserData();
+    postDataFetch(updatedData);
+    //resetValues();
+   }
   
 
   //Función button handler del formulario update (actualización datos del user). Llama a getUserData para recoger valores introducidos por el usuario y llama al fetch pasándole esos valores.
 
   function handleUpdatedBtn() {
     const updatedData = getUserData();
-    postDataFetch(updatedData);
+    putDataFetch(updatedData);
     //resetValues();
 }
 
@@ -88,7 +99,7 @@ updateBtn.addEventListener("click", handleUpdatedBtn);
 //FETCH TIPO POST PARA ACTUALIZAR DATOS DE USUARIOS
 //let url = `http://localhost:8080/alumnos/${userId}`;
 
-//ULTIMO INTENTO POST
+// POST OK
 const postDataFetch = async (updatedData) => {
   console.log(updatedData);
   console.log(JSON.stringify(updatedData));
@@ -113,26 +124,30 @@ const postDataFetch = async (updatedData) => {
 
 };
 
-//DA ERROR 403
-/**function postDataFetch(data) {
-  fetch("http://localhost:8080/alumnos", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(data),
-    mode: "no-cors",
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch(() => {
-      responseTextEl.innerHTML = `<p class="error">No se ha podido realizar la petición..</p>`;
-    });
-} **/
+//PUT
+const putDataFetch = async (updatedData) => {
+  console.log(updatedData);
+  console.log(JSON.stringify(updatedData));
 
+  let url = `http://localhost:8080/alumnos/${userId}`;
+  const res = await fetch(url, {
+    method: "PUT",
+    contentType: "application.json",
+    headers: {
+      'Content-type': 'application/json',
+    },
+    //mode: "no-cors",
+    body: JSON.stringify(updatedData)
+  }).catch((error) => {
+    responseTextEl.innerHTML = `Ha habido un error con el fetch: Error: ${error.message}`;
+  });
+
+  console.log(res, 'consolelog')
+  //const data = await res.json();
+
+ //console.log(data, 'response2');
+
+};
 
 
 /*
