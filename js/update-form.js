@@ -5,10 +5,8 @@ const getIdFormEl = document.querySelector(".js-getIdForm");
 const userIdInput = document.querySelector(".js-userId");
 const sendIdBtn = document.querySelector(".js-sendIdBtn");
 
-//BOTÓN ACTUALIZAR DATOS
-const update2btn = document.querySelector(".js-update2Btn");
+//Constantes con elementos form e inputs del formulario UPDATE (actualizar datos del usuario)
 
-//Constantes con elementos form e inputs del formulario  (post y put)
 const updateFormEl = document.querySelector(".js-upDateForm");
 //const updateInputEls= document.querySelector(".js-updateInput");
 const updateNameInput =document.querySelector(".js-updateNameInput");
@@ -38,25 +36,18 @@ function submitPrevent(event) {
   }
 
   //Función para obtener el id del user
+
   function getUserId() {
     return parseInt(userIdInput.value);
+  
   }
 
   //Evento del formulario id
    sendIdBtn.addEventListener("click", handleIdBtn);
-
   
 
-  //Función button handler del formulario update (actualización datos del user). Llama a getUserData para recoger valores introducidos por el usuario y llama al fetch PUT pasándole esos valores.
-   function handleUpdate2() {
-    const updatedData = getUserData();
-    putDataFetch(updatedData);
+  //Función button handler del formulario update (actualización datos del user). Llama a getUserData para recoger valores introducidos por el usuario y llama al fetch pasándole esos valores.
 
-    //resetValues();
-   }
-  
- //FUNCIÓN PARA CREAR NUEVO USER (POST)
-  
   function handleUpdatedBtn() {
     const updatedData = getUserData();
     postDataFetch(updatedData);
@@ -89,7 +80,8 @@ function submitPrevent(event) {
   }
 
   
-
+//Evento botón submit enviado datos del form
+updateBtn.addEventListener("click", handleUpdatedBtn);
 
 
 
@@ -120,36 +112,6 @@ const postDataFetch = async (updatedData) => {
  //console.log(data, 'response2');
 
 };
-
-//PUT
-const putDataFetch = async (updatedData) => {
-  console.log(updatedData);
-  console.log(JSON.stringify(updatedData));
-
-  let url = `http://localhost:8080/alumnos/${userId}`;
-  const res = await fetch(url, {
-    method: "PUT",
-    contentType: "application.json",
-    headers: {
-      'Content-type': 'application/json',
-    },
-    //mode: "no-cors",
-    body: JSON.stringify(updatedData)
-  }).catch((error) => {
-    responseTextEl.innerHTML = `Ha habido un error con el fetch: Error: ${error.message}`;
-  });
-
-  console.log(res, 'consolelog')
-  //const data = await res.json();
-
- //console.log(data, 'response2');
-
-};
-
-//Evento botón submit enviado datos del form
-updateBtn.addEventListener("click", handleUpdatedBtn);
- //Evento botón Actualizar datos
-update2btn.addEventListener("click", handleUpdate2);
 
 
 
