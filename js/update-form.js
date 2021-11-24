@@ -57,23 +57,23 @@ function submitPrevent(event) {
    //Función para obtener los values de los inputs insertados por el usuario
    function getUserData() {
        
-        // console.log(updateNameInput.value);
-        // console.log(updateSurnameInput.value);
-        // console.log(updateDniInput.value);
-        // console.log(updateEmailInput.value);
-        // console.log(updateTelInput.value);
-        // console.log(updateCpInput.value);
-        // console.log(updateImgInput.value);
+        console.log(updateNameInput.value);
+        console.log(updateSurnameInput.value);
+        console.log(updateDniInput.value);
+        console.log(updateEmailInput.value);
+        console.log(updateTelInput.value);
+        console.log(updateCpInput.value);
+        console.log(updateImgInput.value);
 
         const myData = {
           nombre: updateNameInput.value,
           apellido: updateSurnameInput.value,
-          dni: updateDniInput.value,
           email: updateEmailInput.value,
-          telefono: updateTelInput.value,
-          direccion: updateAddrInput.value,
-          codigoPostal: updateCpInput.value,
+          dni: updateDniInput.value,
           imagen: null,
+          direccion: updateAddrInput.value,
+          telefono: updateTelInput.value,
+          codigoPostal: updateCpInput.value,
         }
 
       return myData;
@@ -91,7 +91,7 @@ updateBtn.addEventListener("click", handleUpdatedBtn);
 //ULTIMO INTENTO POST
 const postDataFetch = async (updatedData) => {
   console.log(updatedData);
-  console.log(JSON.stringify(updatedData))
+  console.log(JSON.stringify(updatedData));
 
   const url = `http://localhost:8080/alumnos`;
   const res = await fetch(url, {
@@ -100,16 +100,16 @@ const postDataFetch = async (updatedData) => {
     headers: {
       'Content-type': 'application/json',
     },
-    mode: "no-cors",
+    //mode: "no-cors",
     body: JSON.stringify(updatedData)
   }).catch((error) => {
     responseTextEl.innerHTML = `Ha habido un error con el fetch: Error: ${error.message}`;
   });
 
   console.log(res, 'consolelog')
-  const data = await res.json();
+  //const data = await res.json();
 
- console.log(data, 'response2');
+ //console.log(data, 'response2');
 
 };
 
