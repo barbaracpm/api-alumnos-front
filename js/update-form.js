@@ -6,7 +6,7 @@ const userIdInput = document.querySelector(".js-userId");
 const sendIdBtn = document.querySelector(".js-sendIdBtn");
 
 //BOTÓN ACTUALIZAR DATOS
-const update2btn = document.querySelector(".js-updatebtn2")
+const update2btn = document.querySelector(".js-update2Btn");
 
 //Constantes con elementos form e inputs del formulario  (post y put)
 const updateFormEl = document.querySelector(".js-upDateForm");
