@@ -9,6 +9,7 @@ const fetchAllStudents = async () => {
       </div>`;
       divContainer.innerHTML = studentsHTMLString;
   });
+
   console.log(res, 'consolelog')
   const data = await res.json();
 
@@ -107,17 +108,14 @@ const fetchCreateStudent = async () => {
       },
       body: JSON.stringify(datamock)
   }).catch((error) => {
-    const pokedex = document.getElementById('pokedex');
-    const pokemonHTMLString =
+    const divContainer = document.getElementById('container');
+    const studentsHTMLString =
       `<div class="flex-item">
         <p class="flex-item-error">Error: Hubo un problema con la petición Fetch: ${error.message}</p>
       </div>`;
-    pokedex.innerHTML = pokemonHTMLString;
+      divContainer.innerHTML = studentsHTMLString;
   });
-  console.log(res, 'consolelog')
   const data = await res.json();
-
-console.log(data,'response2');
 };
 
 fetchCreateStudent();
