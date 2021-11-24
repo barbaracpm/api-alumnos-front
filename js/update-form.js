@@ -89,10 +89,6 @@ function submitPrevent(event) {
   }
 
   
-//Evento botón submit enviado datos del form
-updateBtn.addEventListener("click", handleUpdatedBtn);
- //Evento botón Actualizar datos
-update2btn.addEventListener("click", handleUpdate2);
 
 
 
@@ -149,6 +145,12 @@ const putDataFetch = async (updatedData) => {
  //console.log(data, 'response2');
 
 };
+
+//Evento botón submit enviado datos del form
+updateBtn.addEventListener("click", handleUpdatedBtn);
+ //Evento botón Actualizar datos
+update2btn.addEventListener("click", handleUpdate2);
+
 
 
 /*
